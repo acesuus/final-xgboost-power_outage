@@ -1,0 +1,67 @@
+Rank,Feature,Group,Mean |SHAP|,Share of total,"Spearman(value, SHAP)",Direction of effect
+1,forecast_precipitation_mm,Target-day forecast weather,0.341782808303833,0.07509913,0.786416222599126,Higher value -> higher risk
+2,forecast_gust_vs_fit_p90,Weather stress (vs. p90),0.3362310528755188,0.07387926,0.8866687250575346,Higher value -> higher risk
+3,forecast_precipitation_vs_fit_p90,Weather stress (vs. p90),0.30519750714302063,0.06706033,0.794445890201049,Higher value -> higher risk
+4,forecast_apparent_temperature_max_c,Target-day forecast weather,0.27241528034210205,0.059857167,-0.7009742957570596,Higher value -> lower risk
+5,forecast_wind_speed_mean_kmh,Target-day forecast weather,0.2354082614183426,0.0517257,0.686425616516843,Higher value -> higher risk
+6,forecast_humidity_max_pct,Target-day forecast weather,0.22149042785167694,0.04866757,-0.8305148462363974,Higher value -> lower risk
+7,forecast_wind_gust_max_kmh,Target-day forecast weather,0.21956150233745575,0.04824373,0.883411042539927,Higher value -> higher risk
+8,forecast_precipitation_x_veg5m,Weather-vegetation interactions,0.21769815683364868,0.047834303,0.774600489041123,Higher value -> higher risk
+9,forecast_wind_gust_max_lag1d_kmh,Lagged forecast weather,0.1909990757703781,0.041967776,-0.9754630246205857,Higher value -> lower risk
+10,day_of_year_cos,Temporal (calendar),0.18117180466651917,0.039808452,-0.8743479573803555,Higher value -> lower risk
+11,forecast_temperature_min_c,Target-day forecast weather,0.1806088387966156,0.039684754,-0.1506767420122694,Mixed / weak
+12,outage_days_prev90d,Outage history (cumulative/recency),0.17397254705429077,0.03822658,0.6970521535349143,Higher value -> higher risk
+13,forecast_humidity_min_pct,Target-day forecast weather,0.15357927978038788,0.033745613,-0.632553319326057,Higher value -> lower risk
+14,day_of_week,Temporal (calendar),0.12811021506786346,0.028149355,-0.9182367802783253,Higher value -> lower risk
+15,forecast_temperature_mean_prev3d_c,Lagged forecast weather,0.12567119300365448,0.027613435,0.9326968574854911,Higher value -> higher risk
+16,forecast_wind_gust_max_prev7d_kmh,Lagged forecast weather,0.0878579393029213,0.019304818,-0.6144424529070324,Higher value -> lower risk
+17,days_since_last_known_outage,Outage history (cumulative/recency),0.0838480219244957,0.018423729,-0.8887880903016843,Higher value -> lower risk
+18,forecast_temperature_mean_prev7d_c,Lagged forecast weather,0.08345191180706024,0.018336691,0.9625437785837455,Higher value -> higher risk
+19,forecast_precipitation_lag1d_mm,Lagged forecast weather,0.07609737664461136,0.016720697,-0.684792128947939,Higher value -> lower risk
+20,forecast_temperature_mean_c,Target-day forecast weather,0.07321307063102722,0.016086936,-0.890867676159619,Higher value -> lower risk
+21,forecast_precipitation_sum_prev3d_mm,Lagged forecast weather,0.0715470016002655,0.015720854,-0.4770305657861297,Higher value -> lower risk
+22,forecast_temperature_mean_lag1d_c,Lagged forecast weather,0.061599742621183395,0.013535166,0.9066189495552354,Higher value -> higher risk
+23,forecast_humidity_mean_prev3d_pct,Lagged forecast weather,0.060355693101882935,0.013261814,0.5918041764786295,Higher value -> higher risk
+24,forecast_wind_direction_sin,Target-day forecast weather,0.054185472428798676,0.0119060455,0.7268748886353481,Higher value -> higher risk
+25,forecast_wind_speed_max_kmh,Target-day forecast weather,0.049602821469306946,0.010899111,0.834746118743017,Higher value -> higher risk
+26,forecast_gust_x_veg5m,Weather-vegetation interactions,0.046021897345781326,0.010112283,0.8752962721207171,Higher value -> higher risk
+27,ndvi_mean_brgy,Vegetation,0.04344642907381058,0.009546381,0.7873580995145923,Higher value -> higher risk
+28,forecast_wind_direction_cos,Target-day forecast weather,0.04271305724978447,0.009385239,-0.45890333263032373,Higher value -> lower risk
+29,day_of_year_sin,Temporal (calendar),0.04138218238949776,0.00909281,0.6399159849745993,Higher value -> higher risk
+30,forecast_humidity_mean_pct,Target-day forecast weather,0.03815852850675583,0.008384483,-0.33010137933280054,Higher value -> lower risk
+31,forecast_precipitation_sum_prev7d_mm,Lagged forecast weather,0.03670421615242958,0.00806493,-0.8129745811850442,Higher value -> lower risk
+32,forecast_humidity_mean_lag1d_pct,Lagged forecast weather,0.03394072875380516,0.0074577164,0.8912227772991247,Higher value -> higher risk
+33,ndvi_p90,Vegetation,0.0334891676902771,0.0073584956,0.9220889622749208,Higher value -> higher risk
+34,month_sin,Temporal (calendar),0.027012623846530914,0.0059354203,0.8774414884956088,Higher value -> higher risk
+35,outage_days_prev30d,Outage history (cumulative/recency),0.023948850110173225,0.0052622245,0.6631691939979407,Higher value -> higher risk
+36,recloser,Recloser identity,0.02364746853709221,0.0051960023,,Depends on recloser
+37,forecast_wind_gust_max_prev3d_kmh,Lagged forecast weather,0.019355932250618935,0.004253033,-0.5525689462350856,Higher value -> lower risk
+38,forecast_wet_days_prev7d,Wet-weather history,0.016925537958741188,0.0037190085,-0.810507737504524,Higher value -> lower risk
+39,month_cos,Temporal (calendar),0.016505617648363113,0.0036267403,-0.8586662929127247,Higher value -> lower risk
+40,forecast_temperature_max_c,Target-day forecast weather,0.016124194487929344,0.0035429313,0.43885817778702,Higher value -> higher risk
+41,veg_buffer_30m,Vegetation,0.01543097198009491,0.0033906111,-0.17729012893871607,Mixed / weak
+42,forecast_humidity_mean_prev7d_pct,Lagged forecast weather,0.014807133004069328,0.0032535363,-0.6705325605642615,Higher value -> lower risk
+43,valid_frac_b30,Vegetation,0.013867635279893875,0.0030471028,0.5796049866047263,Higher value -> higher risk
+44,is_weekend,Temporal (calendar),0.012382115237414837,0.002720693,-0.7841409023120534,Higher value -> lower risk
+45,network_outage_unit_days_prev7d,Outage history (cumulative/recency),0.010943029075860977,0.0024044858,-0.6595145752498434,Higher value -> lower risk
+46,veg_buffer_15m,Vegetation,0.010224801488220692,0.0022466716,-0.4522118559497062,Higher value -> lower risk
+47,veg_buffer_5m,Vegetation,0.010071282275021076,0.002212939,-0.5047890640755582,Higher value -> lower risk
+48,forecast_consecutive_wet_days_capped7,Wet-weather history,0.008270684629678726,0.001817298,-0.5268141846911701,Higher value -> lower risk
+49,forecast_weather_code,Target-day forecast weather,0.004235951229929924,0.0009307556,-0.2951549333872075,Higher value -> lower risk
+50,days_since_last_outage_capped7,Outage history (cumulative/recency),0.002914383774623275,0.00064037065,-0.49203145860571307,Higher value -> lower risk
+51,outage_days_prev7d,Outage history (cumulative/recency),0.0015860773855820298,0.00034850504,0.5122960970137045,Higher value -> higher risk
+52,outage_days_prev3d,Outage history (cumulative/recency),0.0006745858117938042,0.00014822515,0.34067435476159774,Higher value -> higher risk
+53,equipment_fault_days_prev14d,Equipment fault history,0.0006469207000918686,0.00014214635,-0.5173021274585107,Higher value -> lower risk
+54,equipment_fault_days_prev7d,Equipment fault history,0.0,0.0,,Mixed / weak
+55,forecast_wet_days_prev3d,Wet-weather history,0.0,0.0,,Mixed / weak
+56,jumper_fault_days_prev7d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+57,line_damage_days_prev7d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+58,jumper_fault_days_prev14d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+59,line_damage_days_prev14d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+60,pole_crossarm_fault_days_prev7d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+61,no_outage_prev7d,Outage history (cumulative/recency),0.0,0.0,,Mixed / weak
+62,pole_crossarm_fault_days_prev14d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+63,transformer_fault_days_prev7d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+64,transformer_fault_days_prev14d,Equipment-category fault history,0.0,0.0,,Mixed / weak
+65,repair_notice_days_prev7d,Repair history,0.0,0.0,,Mixed / weak
+66,repair_notice_days_prev14d,Repair history,0.0,0.0,,Mixed / weak

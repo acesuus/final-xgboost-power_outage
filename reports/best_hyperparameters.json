@@ -1,0 +1,27 @@
+{
+  "xgb": {
+    "n_estimators": 250,
+    "learning_rate": 0.05,
+    "max_depth": 4,
+    "min_child_weight": 12,
+    "subsample": 0.6,
+    "colsample_bytree": 0.75,
+    "reg_alpha": 0.5,
+    "reg_lambda": 15.0,
+    "gamma": 1.0,
+    "spw_mode": "none"
+  },
+  "lgb": {
+    "n_estimators": 250,
+    "learning_rate": 0.01,
+    "num_leaves": 15,
+    "max_depth": 5,
+    "min_child_samples": 20,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.4,
+    "reg_alpha": 0.0,
+    "reg_lambda": 1.0,
+    "spw_mode": "none"
+  }
+}

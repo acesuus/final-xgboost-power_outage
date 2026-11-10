@@ -1,0 +1,8 @@
+{
+  "shap_rank_agreement_test_vs_all_data_spearman": 0.9976020697923896,
+  "threshold": 0.1222871452420701,
+  "calibration_coef": [
+    1.1456964894406907,
+    0.35551009068473943
+  ]
+}

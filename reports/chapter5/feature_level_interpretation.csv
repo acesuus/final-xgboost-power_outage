@@ -1,0 +1,12 @@
+Group,Feature,Low values,Mean SHAP (low),High values,Mean SHAP (high),Outage rate (low),Outage rate (high)
+Target-day forecast weather,forecast_precipitation_mm,<= 0.8 (bottom 25%),-0.424427,>= 7.2 (top 25%),0.2052014,0.0030441400304414,0.057233704292527825
+Lagged forecast weather,forecast_wind_gust_max_lag1d_kmh,<= 26.6 (bottom 25%),0.30076292,>= 34.9 (top 25%),-0.30083975,0.022364217252396165,0.023809523809523808
+Weather stress (vs. p90),forecast_gust_vs_fit_p90,<= 0.619 (bottom 25%),-0.50580543,>= 0.816 (top 25%),0.26820138,0.012759170653907496,0.03815580286168521
+Temporal (calendar),day_of_year_cos,<= -0.829 (bottom 25%),0.2129837,>= 0.374 (top 25%),-0.23832606,0.023809523809523808,0.011111111111111112
+Outage history (cumulative/recency),outage_days_prev90d,<= 1 (bottom 25%),-0.20071861,>= 3 (top 25%),-0.0028049925,0.02323503127792672,0.024305555555555556
+Weather-vegetation interactions,forecast_precipitation_x_veg5m,<= 0.289 (bottom 25%),-0.28559935,>= 2.8 (top 25%),0.114593156,0.003194888178913738,0.06070287539936102
+Vegetation,ndvi_mean_brgy,<= 0.49 (bottom 25%),-0.055534057,>= 0.606 (top 25%),0.06204648,0.02009273570324575,0.03194888178913738
+Wet-weather history,forecast_wet_days_prev7d,<= 4 (bottom 25%),0.022617586,>= 7 (top 25%),-0.013281001,0.023370233702337023,0.026923076923076925
+Equipment fault history,equipment_fault_days_prev14d,= 0,0.00042070422,> 0,-0.002779011,0.023430592396109638,0.029166666666666667
+Equipment-category fault history,jumper_fault_days_prev7d,= 0,0.0,> 0,0.0,0.02426202992317024,0.0
+Repair history,repair_notice_days_prev7d,= 0,0.0,> 0,,0.023980815347721823,

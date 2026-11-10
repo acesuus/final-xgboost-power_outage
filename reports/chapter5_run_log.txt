@@ -1,0 +1,224 @@
+Re-running cross-validation for the primary model ...
+Computing SHAP values ...
+Running feature-set ablations ...
+
+=== feature_level_interpretation.csv ===
+                              Group                          Feature             Low values  Mean SHAP (low)        High values  Mean SHAP (high)  Outage rate (low)  Outage rate (high)
+        Target-day forecast weather        forecast_precipitation_mm    <= 0.8 (bottom 25%)          -0.4244   >= 7.2 (top 25%)            0.2052             0.0030              0.0572
+            Lagged forecast weather forecast_wind_gust_max_lag1d_kmh   <= 26.6 (bottom 25%)           0.3008  >= 34.9 (top 25%)           -0.3008             0.0224              0.0238
+           Weather stress (vs. p90)         forecast_gust_vs_fit_p90  <= 0.619 (bottom 25%)          -0.5058 >= 0.816 (top 25%)            0.2682             0.0128              0.0382
+                Temporal (calendar)                  day_of_year_cos <= -0.829 (bottom 25%)           0.2130 >= 0.374 (top 25%)           -0.2383             0.0238              0.0111
+Outage history (cumulative/recency)              outage_days_prev90d      <= 1 (bottom 25%)          -0.2007     >= 3 (top 25%)           -0.0028             0.0232              0.0243
+    Weather-vegetation interactions   forecast_precipitation_x_veg5m  <= 0.289 (bottom 25%)          -0.2856   >= 2.8 (top 25%)            0.1146             0.0032              0.0607
+                         Vegetation                   ndvi_mean_brgy   <= 0.49 (bottom 25%)          -0.0555 >= 0.606 (top 25%)            0.0620             0.0201              0.0319
+                Wet-weather history         forecast_wet_days_prev7d      <= 4 (bottom 25%)           0.0226     >= 7 (top 25%)           -0.0133             0.0234              0.0269
+            Equipment fault history     equipment_fault_days_prev14d                    = 0           0.0004                > 0           -0.0028             0.0234              0.0292
+   Equipment-category fault history         jumper_fault_days_prev7d                    = 0           0.0000                > 0            0.0000             0.0243              0.0000
+                     Repair history        repair_notice_days_prev7d                    = 0           0.0000                > 0               NaN             0.0240                 NaN
+
+=== reliability_bins.csv ===
+       Set       Bin  Rows  Outages  Mean predicted  Observed rate
+Validation 0.00-0.05  5767       64          0.0116         0.0111
+Validation 0.05-0.10   381       29          0.0704         0.0761
+Validation 0.10-0.15   134       18          0.1235         0.1343
+Validation 0.15-0.20    75        9          0.1733         0.1200
+Validation 0.20-0.25    46       14          0.2252         0.3043
+Validation 0.25-0.30    32        6          0.2782         0.1875
+Validation 0.30-0.40    63       25          0.3466         0.3968
+Validation 0.40-0.50    22        9          0.4463         0.4091
+Validation 0.50-1.00    59       39          0.6599         0.6610
+      Test 0.00-0.05  2310       29          0.0091         0.0126
+      Test 0.05-0.10    90        3          0.0685         0.0333
+      Test 0.10-0.15    36        4          0.1242         0.1111
+      Test 0.15-0.20    16        8          0.1723         0.5000
+      Test 0.20-0.25    14        4          0.2209         0.2857
+      Test 0.25-0.30    10        2          0.2723         0.2000
+      Test 0.30-0.40     7        3          0.3406         0.4286
+      Test 0.40-0.50     5        2          0.4425         0.4000
+      Test 0.50-1.00    14        5          0.6650         0.3571
+
+=== risk_ranking.csv ===
+Top share of recloser-days  Recloser-days flagged  Outages captured  Share of all outages  Outage rate among flagged  Min probability in group
+                        1%                     25                10                0.1667                      0.400                    0.3134
+                        2%                     50                16                0.2667                      0.320                    0.2005
+                        5%                    125                30                0.5000                      0.240                    0.0781
+                       10%                    250                35                0.5833                      0.140                    0.0354
+                       20%                    500                44                0.7333                      0.088                    0.0180
+
+=== routine_vs_weather.csv ===
+                  Data                                    Subset  Rows  Outages  Outage rate  Alerts  Caught  Recall  Precision  AUC-ROC
+           Test (2026) Weather-stress days (rain or gust >= p90)   333       17       0.0511      19      10  0.5882     0.5263   0.8853
+           Test (2026)                              Routine days  2169       43       0.0198      66      18  0.4186     0.2727   0.8380
+           Test (2026)                      Wet season (Jun-Nov)  1143       39       0.0341      53      16  0.4103     0.3019   0.8084
+           Test (2026)                      Dry season (Dec-May)  1359       21       0.0155      32      12  0.5714     0.3750   0.9269
+Validation (2024-2025) Weather-stress days (rain or gust >= p90)  1318       59       0.0448      98      33  0.5593     0.3367   0.8415
+Validation (2024-2025)                              Routine days  5261      154       0.0293     265      78  0.5065     0.2943   0.8747
+Validation (2024-2025)                      Wet season (Jun-Nov)  3294      140       0.0425     255      78  0.5571     0.3059   0.8537
+Validation (2024-2025)                      Dry season (Dec-May)  3285       73       0.0222     108      33  0.4521     0.3056   0.8923
+
+=== shap_feature_importance_all.csv ===
+ Rank                               Feature                               Group  Mean |SHAP|  Share of total  Spearman(value, SHAP)         Direction of effect
+    1             forecast_precipitation_mm         Target-day forecast weather       0.3418          0.0751                 0.7864 Higher value -> higher risk
+    2              forecast_gust_vs_fit_p90            Weather stress (vs. p90)       0.3362          0.0739                 0.8867 Higher value -> higher risk
+    3     forecast_precipitation_vs_fit_p90            Weather stress (vs. p90)       0.3052          0.0671                 0.7944 Higher value -> higher risk
+    4   forecast_apparent_temperature_max_c         Target-day forecast weather       0.2724          0.0599                -0.7010  Higher value -> lower risk
+    5          forecast_wind_speed_mean_kmh         Target-day forecast weather       0.2354          0.0517                 0.6864 Higher value -> higher risk
+    6             forecast_humidity_max_pct         Target-day forecast weather       0.2215          0.0487                -0.8305  Higher value -> lower risk
+    7            forecast_wind_gust_max_kmh         Target-day forecast weather       0.2196          0.0482                 0.8834 Higher value -> higher risk
+    8        forecast_precipitation_x_veg5m     Weather-vegetation interactions       0.2177          0.0478                 0.7746 Higher value -> higher risk
+    9      forecast_wind_gust_max_lag1d_kmh             Lagged forecast weather       0.1910          0.0420                -0.9755  Higher value -> lower risk
+   10                       day_of_year_cos                 Temporal (calendar)       0.1812          0.0398                -0.8743  Higher value -> lower risk
+   11            forecast_temperature_min_c         Target-day forecast weather       0.1806          0.0397                -0.1507                Mixed / weak
+   12                   outage_days_prev90d Outage history (cumulative/recency)       0.1740          0.0382                 0.6971 Higher value -> higher risk
+   13             forecast_humidity_min_pct         Target-day forecast weather       0.1536          0.0337                -0.6326  Higher value -> lower risk
+   14                           day_of_week                 Temporal (calendar)       0.1281          0.0281                -0.9182  Higher value -> lower risk
+   15    forecast_temperature_mean_prev3d_c             Lagged forecast weather       0.1257          0.0276                 0.9327 Higher value -> higher risk
+   16     forecast_wind_gust_max_prev7d_kmh             Lagged forecast weather       0.0879          0.0193                -0.6144  Higher value -> lower risk
+   17          days_since_last_known_outage Outage history (cumulative/recency)       0.0838          0.0184                -0.8888  Higher value -> lower risk
+   18    forecast_temperature_mean_prev7d_c             Lagged forecast weather       0.0835          0.0183                 0.9625 Higher value -> higher risk
+   19       forecast_precipitation_lag1d_mm             Lagged forecast weather       0.0761          0.0167                -0.6848  Higher value -> lower risk
+   20           forecast_temperature_mean_c         Target-day forecast weather       0.0732          0.0161                -0.8909  Higher value -> lower risk
+   21  forecast_precipitation_sum_prev3d_mm             Lagged forecast weather       0.0715          0.0157                -0.4770  Higher value -> lower risk
+   22     forecast_temperature_mean_lag1d_c             Lagged forecast weather       0.0616          0.0135                 0.9066 Higher value -> higher risk
+   23     forecast_humidity_mean_prev3d_pct             Lagged forecast weather       0.0604          0.0133                 0.5918 Higher value -> higher risk
+   24           forecast_wind_direction_sin         Target-day forecast weather       0.0542          0.0119                 0.7269 Higher value -> higher risk
+   25           forecast_wind_speed_max_kmh         Target-day forecast weather       0.0496          0.0109                 0.8347 Higher value -> higher risk
+   26                 forecast_gust_x_veg5m     Weather-vegetation interactions       0.0460          0.0101                 0.8753 Higher value -> higher risk
+   27                        ndvi_mean_brgy                          Vegetation       0.0434          0.0095                 0.7874 Higher value -> higher risk
+   28           forecast_wind_direction_cos         Target-day forecast weather       0.0427          0.0094                -0.4589  Higher value -> lower risk
+   29                       day_of_year_sin                 Temporal (calendar)       0.0414          0.0091                 0.6399 Higher value -> higher risk
+   30            forecast_humidity_mean_pct         Target-day forecast weather       0.0382          0.0084                -0.3301  Higher value -> lower risk
+   31  forecast_precipitation_sum_prev7d_mm             Lagged forecast weather       0.0367          0.0081                -0.8130  Higher value -> lower risk
+   32      forecast_humidity_mean_lag1d_pct             Lagged forecast weather       0.0339          0.0075                 0.8912 Higher value -> higher risk
+   33                              ndvi_p90                          Vegetation       0.0335          0.0074                 0.9221 Higher value -> higher risk
+   34                             month_sin                 Temporal (calendar)       0.0270          0.0059                 0.8774 Higher value -> higher risk
+   35                   outage_days_prev30d Outage history (cumulative/recency)       0.0239          0.0053                 0.6632 Higher value -> higher risk
+   36                              recloser                   Recloser identity       0.0236          0.0052                    NaN         Depends on recloser
+   37     forecast_wind_gust_max_prev3d_kmh             Lagged forecast weather       0.0194          0.0043                -0.5526  Higher value -> lower risk
+   38              forecast_wet_days_prev7d                 Wet-weather history       0.0169          0.0037                -0.8105  Higher value -> lower risk
+   39                             month_cos                 Temporal (calendar)       0.0165          0.0036                -0.8587  Higher value -> lower risk
+   40            forecast_temperature_max_c         Target-day forecast weather       0.0161          0.0035                 0.4389 Higher value -> higher risk
+   41                        veg_buffer_30m                          Vegetation       0.0154          0.0034                -0.1773                Mixed / weak
+   42     forecast_humidity_mean_prev7d_pct             Lagged forecast weather       0.0148          0.0033                -0.6705  Higher value -> lower risk
+   43                        valid_frac_b30                          Vegetation       0.0139          0.0030                 0.5796 Higher value -> higher risk
+   44                            is_weekend                 Temporal (calendar)       0.0124          0.0027                -0.7841  Higher value -> lower risk
+   45       network_outage_unit_days_prev7d Outage history (cumulative/recency)       0.0109          0.0024                -0.6595  Higher value -> lower risk
+   46                        veg_buffer_15m                          Vegetation       0.0102          0.0022                -0.4522  Higher value -> lower risk
+   47                         veg_buffer_5m                          Vegetation       0.0101          0.0022                -0.5048  Higher value -> lower risk
+   48 forecast_consecutive_wet_days_capped7                 Wet-weather history       0.0083          0.0018                -0.5268  Higher value -> lower risk
+   49                 forecast_weather_code         Target-day forecast weather       0.0042          0.0009                -0.2952  Higher value -> lower risk
+   50        days_since_last_outage_capped7 Outage history (cumulative/recency)       0.0029          0.0006                -0.4920  Higher value -> lower risk
+   51                    outage_days_prev7d Outage history (cumulative/recency)       0.0016          0.0003                 0.5123 Higher value -> higher risk
+   52                    outage_days_prev3d Outage history (cumulative/recency)       0.0007          0.0001                 0.3407 Higher value -> higher risk
+   53          equipment_fault_days_prev14d             Equipment fault history       0.0006          0.0001                -0.5173  Higher value -> lower risk
+   54           equipment_fault_days_prev7d             Equipment fault history       0.0000          0.0000                    NaN                Mixed / weak
+   55              forecast_wet_days_prev3d                 Wet-weather history       0.0000          0.0000                    NaN                Mixed / weak
+   56              jumper_fault_days_prev7d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   57               line_damage_days_prev7d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   58             jumper_fault_days_prev14d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   59              line_damage_days_prev14d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   60       pole_crossarm_fault_days_prev7d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   61                      no_outage_prev7d Outage history (cumulative/recency)       0.0000          0.0000                    NaN                Mixed / weak
+   62      pole_crossarm_fault_days_prev14d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   63         transformer_fault_days_prev7d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   64        transformer_fault_days_prev14d    Equipment-category fault history       0.0000          0.0000                    NaN                Mixed / weak
+   65             repair_notice_days_prev7d                      Repair history       0.0000          0.0000                    NaN                Mixed / weak
+   66            repair_notice_days_prev14d                      Repair history       0.0000          0.0000                    NaN                Mixed / weak
+
+=== table5_10_ablation.csv ===
+                                                         Feature set  Features  Precision  Recall     F1  AUC-ROC  PR-AUC  Brier     BSS  Threshold  TP  FP  FN  CV PR-AUC (mean)  CV PR-AUC (std)  CV AUC-ROC Test AUC-ROC diff vs full (95% CI) Test PR-AUC diff vs full (95% CI)
+                                           Full model (all features)        66     0.3294  0.4667 0.3862   0.8539  0.2209 0.0212  0.0938     0.1223  28  57  32            0.4311           0.1101      0.8675                                NaN                               NaN
+                              Without lagged meteorological features        51     0.3279  0.3333 0.3306   0.8336  0.1907 0.0217  0.0716     0.1390  20  41  40            0.4112           0.1476      0.8640            -0.020 [-0.043, -0.001]           -0.030 [-0.066, +0.008]
+                          Without cumulative outage-history features        58     0.2549  0.4333 0.3210   0.8429  0.2077 0.0216  0.0786     0.1183  26  76  34            0.4025           0.1112      0.8614            -0.011 [-0.022, -0.001]           -0.013 [-0.046, +0.009]
+Base set (without lagged meteorological and outage-history features)        43     0.2625  0.3500 0.3000   0.8223  0.1889 0.0219  0.0645     0.1272  21  59  39            0.3920           0.1484      0.8589            -0.032 [-0.059, -0.008]           -0.032 [-0.079, +0.005]
+              Without vegetation and weather-vegetation interactions        58     0.2958  0.3500 0.3206   0.8529  0.2122 0.0213  0.0914     0.1390  21  50  39            0.4316           0.1135      0.8706            -0.001 [-0.009, +0.007]           -0.009 [-0.029, +0.006]
+                           Without infrastructure and repair history        54     0.3210  0.4333 0.3688   0.8546  0.2215 0.0211  0.0968     0.1272  26  55  34            0.4342           0.1112      0.8680            +0.001 [-0.005, +0.006]           +0.001 [-0.009, +0.010]
+                                               Weather features only        31     0.2680  0.4333 0.3312   0.8442  0.2120 0.0210  0.1013     0.1105  26  71  34            0.3655           0.0969      0.8556            -0.010 [-0.025, +0.006]           -0.009 [-0.040, +0.015]
+ Non-weather features only (history, vegetation, calendar, recloser)        33     0.0378  0.4500 0.0697   0.5827  0.0335 0.0235 -0.0021     0.0346  27 688  33            0.0640           0.0164      0.6511            -0.271 [-0.356, -0.197]           -0.187 [-0.325, -0.106]
+
+=== table5_1_dataset_summary.csv ===
+                                          Characteristic                    Value
+                                       Covered reclosers                        9
+                                          Period covered 2022-08-31 to 2026-10-05
+                           Total records (recloser-days)                    13473
+                                  Outage records (y = 1)                      418
+                              Non-outage records (y = 0)                    13055
+                                       Outage prevalence                    3.10%
+                      Class ratio (non-outage to outage)                 31.2 : 1
+                                          Input features                       66
+Model input columns (after one-hot encoding of recloser)                       74
+
+=== table5_2_data_split.csv ===
+                                   Set                   Period  Rows Proportion  Outage rows Outage prevalence
+             Training (initial window) 2022-08-31 to 2023-12-31  4392      32.6%          145             3.30%
+Validation (4 rolling half-year folds) 2024-01-01 to 2025-12-31  6579      48.8%          213             3.24%
+                    Testing (held out) 2026-01-01 to 2026-10-05  2502      18.6%           60             2.40%
+
+=== table5_2b_cv_folds.csv ===
+              Fold  Training rows  Training outages  Validation rows  Validation outages Validation prevalence
+2024-01 to 2024-06           4392               145             1638                  63                 3.85%
+2024-07 to 2024-12           6030               208             1656                  60                 3.62%
+2025-01 to 2025-06           7686               268             1629                  38                 2.33%
+2025-07 to 2025-12           9315               306             1656                  52                 3.14%
+
+=== table5_3_feature_groups.csv ===
+                              Group  Count                                                                                             Examples
+        Target-day forecast weather     14                    forecast_precipitation_mm, forecast_temperature_max_c, forecast_temperature_min_c
+            Lagged forecast weather     12 forecast_precipitation_lag1d_mm, forecast_wind_gust_max_lag1d_kmh, forecast_temperature_mean_lag1d_c
+   Equipment-category fault history      8                          line_damage_days_prev7d, line_damage_days_prev14d, jumper_fault_days_prev7d
+Outage history (cumulative/recency)      8                               outage_days_prev3d, outage_days_prev7d, days_since_last_outage_capped7
+                Temporal (calendar)      6                                                             day_of_week, is_weekend, day_of_year_sin
+                         Vegetation      6                                                        veg_buffer_5m, veg_buffer_15m, veg_buffer_30m
+                Wet-weather history      3            forecast_wet_days_prev3d, forecast_wet_days_prev7d, forecast_consecutive_wet_days_capped7
+            Equipment fault history      2                                            equipment_fault_days_prev7d, equipment_fault_days_prev14d
+           Weather stress (vs. p90)      2                                          forecast_precipitation_vs_fit_p90, forecast_gust_vs_fit_p90
+                     Repair history      2                                                repair_notice_days_prev7d, repair_notice_days_prev14d
+    Weather-vegetation interactions      2                                                forecast_gust_x_veg5m, forecast_precipitation_x_veg5m
+                  Recloser identity      1                                                                                             recloser
+
+=== table5_5_performance_validation_test.csv ===
+                              Set  Precision  Recall  F1-Score  ROC-AUC  PR-AUC  Brier    BSS  TP  FP  FN   TN  Specificity  Prevalence
+Validation (pooled CV, 2024-2025)     0.3058  0.5211    0.3854   0.8675  0.3936 0.0244 0.2215 111 252 102 6114       0.9604      0.0324
+                      Test (2026)     0.3294  0.4667    0.3862   0.8539  0.2209 0.0212 0.0938  28  57  32 2385       0.9767      0.0240
+
+=== table5_7_brier.csv ===
+       Set  Raw Brier  Calibrated Brier  Baseline Brier (predict outage rate)  BSS (raw)  BSS (calibrated)  Mean predicted (calibrated)  Observed rate
+Validation     0.0245            0.0244                                0.0313     0.2165            0.2215                       0.0324         0.0324
+      Test     0.0210            0.0212                                0.0234     0.1015            0.0938                       0.0217         0.0240
+
+=== table5_8_top10_shap.csv ===
+ Rank                             Feature                           Group  Mean |SHAP|  Share of total  Spearman(value, SHAP)         Direction of effect
+    1           forecast_precipitation_mm     Target-day forecast weather       0.3418          0.0751                 0.7864 Higher value -> higher risk
+    2            forecast_gust_vs_fit_p90        Weather stress (vs. p90)       0.3362          0.0739                 0.8867 Higher value -> higher risk
+    3   forecast_precipitation_vs_fit_p90        Weather stress (vs. p90)       0.3052          0.0671                 0.7944 Higher value -> higher risk
+    4 forecast_apparent_temperature_max_c     Target-day forecast weather       0.2724          0.0599                -0.7010  Higher value -> lower risk
+    5        forecast_wind_speed_mean_kmh     Target-day forecast weather       0.2354          0.0517                 0.6864 Higher value -> higher risk
+    6           forecast_humidity_max_pct     Target-day forecast weather       0.2215          0.0487                -0.8305  Higher value -> lower risk
+    7          forecast_wind_gust_max_kmh     Target-day forecast weather       0.2196          0.0482                 0.8834 Higher value -> higher risk
+    8      forecast_precipitation_x_veg5m Weather-vegetation interactions       0.2177          0.0478                 0.7746 Higher value -> higher risk
+    9    forecast_wind_gust_max_lag1d_kmh         Lagged forecast weather       0.1910          0.0420                -0.9755  Higher value -> lower risk
+   10                     day_of_year_cos             Temporal (calendar)       0.1812          0.0398                -0.8743  Higher value -> lower risk
+
+=== table5_9_shap_by_group.csv ===
+                              Group  Mean |SHAP| (sum)  Share of total (%)  Features
+        Target-day forecast weather             1.9031             41.8159        14
+            Lagged forecast weather             0.8624             18.9490        12
+           Weather stress (vs. p90)             0.6414             14.0940         2
+                Temporal (calendar)             0.4066              8.9333         6
+Outage history (cumulative/recency)             0.2979              6.5454         8
+    Weather-vegetation interactions             0.2637              5.7947         2
+                         Vegetation             0.1265              2.7802         6
+                Wet-weather history             0.0252              0.5536         3
+                  Recloser identity             0.0236              0.5196         1
+            Equipment fault history             0.0006              0.0142         2
+   Equipment-category fault history             0.0000              0.0000         8
+                     Repair history             0.0000              0.0000         2
+
+ {
+  "shap_rank_agreement_test_vs_all_data_spearman": 0.9976020697923896,
+  "threshold": 0.1222871452420701,
+  "calibration_coef": [
+    1.1456964894406907,
+    0.35551009068473943
+  ]
+}

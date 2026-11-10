@@ -1,0 +1,4 @@
+Set,Period,Rows,Proportion,Outage rows,Outage prevalence
+Training (initial window),2022-08-31 to 2023-12-31,4392,32.6%,145,3.30%
+Validation (4 rolling half-year folds),2024-01-01 to 2025-12-31,6579,48.8%,213,3.24%
+Testing (held out),2026-01-01 to 2026-10-05,2502,18.6%,60,2.40%

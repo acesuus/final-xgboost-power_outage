@@ -1,0 +1,11 @@
+Rank,Feature,Group,Mean |SHAP|,Share of total,"Spearman(value, SHAP)",Direction of effect
+1,forecast_precipitation_mm,Target-day forecast weather,0.341782808303833,0.07509913,0.786416222599126,Higher value -> higher risk
+2,forecast_gust_vs_fit_p90,Weather stress (vs. p90),0.3362310528755188,0.07387926,0.8866687250575346,Higher value -> higher risk
+3,forecast_precipitation_vs_fit_p90,Weather stress (vs. p90),0.30519750714302063,0.06706033,0.794445890201049,Higher value -> higher risk
+4,forecast_apparent_temperature_max_c,Target-day forecast weather,0.27241528034210205,0.059857167,-0.7009742957570596,Higher value -> lower risk
+5,forecast_wind_speed_mean_kmh,Target-day forecast weather,0.2354082614183426,0.0517257,0.686425616516843,Higher value -> higher risk
+6,forecast_humidity_max_pct,Target-day forecast weather,0.22149042785167694,0.04866757,-0.8305148462363974,Higher value -> lower risk
+7,forecast_wind_gust_max_kmh,Target-day forecast weather,0.21956150233745575,0.04824373,0.883411042539927,Higher value -> higher risk
+8,forecast_precipitation_x_veg5m,Weather-vegetation interactions,0.21769815683364868,0.047834303,0.774600489041123,Higher value -> higher risk
+9,forecast_wind_gust_max_lag1d_kmh,Lagged forecast weather,0.1909990757703781,0.041967776,-0.9754630246205857,Higher value -> lower risk
+10,day_of_year_cos,Temporal (calendar),0.18117180466651917,0.039808452,-0.8743479573803555,Higher value -> lower risk

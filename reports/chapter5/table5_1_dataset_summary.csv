@@ -1,0 +1,10 @@
+Characteristic,Value
+Covered reclosers,9
+Period covered,2022-08-31 to 2026-10-05
+Total records (recloser-days),13473
+Outage records (y = 1),418
+Non-outage records (y = 0),13055
+Outage prevalence,3.10%
+Class ratio (non-outage to outage),31.2 : 1
+Input features,66
+Model input columns (after one-hot encoding of recloser),74

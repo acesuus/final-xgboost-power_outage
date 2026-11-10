@@ -1,0 +1,13 @@
+Group,Gain share
+target_day_forecast_weather,0.48547698917689847
+lagged_forecast_weather,0.14966241882708467
+weather_stress,0.1385792747949926
+calendar,0.07169222418182807
+outage_history,0.06521869226431683
+weather_vegetation_interactions,0.05431922350296851
+vegetation,0.029387298425911222
+wet_weather_history,0.0031933972109819426
+identity,0.0023520229418243265
+equipment_history,0.00011845867319334376
+equipment_category_history,0.0
+repair_history,0.0
