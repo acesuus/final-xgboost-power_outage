@@ -551,49 +551,136 @@ areas:
 
 ---
 
-## Optional Section — Comparison with Baseline Models
+## 5.4.1 Comparison with Baseline Models
 
-*This section can be added to Chapter 5, for example as Section 5.4.1, if the panel asks how XGBoost
-compares with other algorithms. All models used the same features, data splits, calibration and
-threshold rule. LightGBM was tuned with the same random search as XGBoost. Random Forest and Logistic
-Regression used fixed settings: a 300-tree forest with depth 7, and L2-regularized logistic regression
-with balanced class weights.*
+To check whether XGBoost was a suitable choice, it was compared with three baseline models:
 
-**Table 5.B1 Validation Performance (Four Rolling Folds, 2024–2025)**
+- **LightGBM:** another gradient-boosting method, and XGBoost's closest competitor.
+- **Random Forest:** many independent decision trees whose votes are averaged.
+- **Logistic Regression:** a simple linear model often used as a reference point.
 
-| Model | PR-AUC (mean ± sd) | AUC-ROC (pooled) |
-|---|---|---|
-| **XGBoost (proposed)** | **0.431 ± 0.110** | **0.868** |
-| LightGBM | 0.433 ± 0.117 | 0.864 |
-| Random Forest | 0.409 ± 0.112 | 0.855 |
-| Logistic Regression | 0.092 ± 0.029 | 0.738 |
+To keep the comparison fair, all four models received the same 66 inputs and the same chronological
+split. They were also checked with the same four rolling validation folds. Each model's probabilities were
+calibrated with the same method, and its warning threshold was chosen with the same rule.
 
-**Table 5.B2 Test Performance (2026)**
+The model settings were:
+- **XGBoost and LightGBM:** tuned with the same 25-combination random search.
+- **Random Forest:** 300 trees with a maximum depth of seven.
+- **Logistic Regression:** standardized inputs, L2 regularization and balanced class weights.
 
-| Model | AUC-ROC (95% CI) | PR-AUC (95% CI) | Precision | Recall | F1 | Brier | BSS | TP | FP | FN |
-|---|---|---|---|---|---|---|---|---|---|---|
-| **XGBoost (proposed)** | **0.854** (0.795–0.901) | **0.221** (0.136–0.362) | **0.329** | 0.467 | **0.386** | **0.0212** | **0.094** | 28 | 57 | 32 |
-| LightGBM | 0.839 (0.784–0.886) | 0.204 (0.120–0.334) | 0.259 | 0.250 | 0.254 | 0.0214 | 0.087 | 15 | 43 | 45 |
-| Random Forest | 0.838 (0.782–0.885) | 0.152 (0.088–0.271) | 0.179 | 0.317 | 0.229 | 0.0220 | 0.061 | 19 | 87 | 41 |
-| Logistic Regression | 0.785 (0.728–0.840) | 0.076 (0.048–0.138) | 0.066 | 0.583 | 0.118 | 0.0229 | 0.023 | 35 | 498 | 25 |
+The comparison has two parts. Table 5.6a covers validation (2024–2025), which was used to develop the
+models. Tables 5.6b to 5.6d cover the 2026 test period, which none of the models saw during development.
+
+**Table 5.6a Baseline Model Performance Across Four Rolling Validation Folds (2024–2025)**
+
+| Model | 2024 H1 | 2024 H2 | 2025 H1 | 2025 H2 | Mean PR-AUC ± SD | Pooled ROC-AUC |
+|---|---|---|---|---|---|---|
+| XGBoost | **0.514** | 0.564 | **0.305** | 0.341 | 0.431 ± 0.110 | **0.868** |
+| LightGBM | 0.511 | **0.580** | 0.288 | **0.355** | **0.433** ± 0.117 | 0.864 |
+| Random Forest | 0.502 | 0.536 | 0.272 | 0.325 | 0.409 ± 0.112 | 0.855 |
+| Logistic Regression | 0.098 | 0.132 | 0.051 | 0.087 | 0.092 ± 0.029 | 0.738 |
+
+*The validation outage rate was about 3%, so a model guessing at random would score a PR-AUC near 0.03.*
+
+**The three tree-based models performed almost the same during validation.**
+- XGBoost and LightGBM had nearly identical mean PR-AUC (0.431 vs 0.433), and each scored highest in two
+  of the four folds.
+- Random Forest was slightly behind (0.409).
+- The differences among the three (at most 0.024) are much smaller than how much each model's scores
+  varied from fold to fold (SD about 0.11). Validation therefore does not show that any one of them is
+  clearly better.
+
+**Logistic Regression performed far worse,** with a PR-AUC of only 0.092. A straight-line model cannot
+capture effects that depend on combinations of conditions. For example, strong gusts matter more when the
+soil is already wet and vegetation is dense. Tree models handle such combinations naturally.
+
+**All four models scored lower in 2025 than in 2024.** This means the 2025 outages were harder to predict
+for every model, not only for XGBoost.
+
+**Table 5.6b Baseline Model Performance on the Held-Out 2026 Test Set**
+
+| Model | ROC-AUC (95% CI) | Average precision (95% CI) | Lift over random | Precision | Recall | F1 | Brier | Brier skill |
+|---|---|---|---|---|---|---|---|---|
+| **XGBoost** | **0.854** (0.795–0.901) | **0.221** (0.136–0.362) | **9.2×** | **0.329** | 0.467 | **0.386** | **0.0212** | **0.094** |
+| LightGBM | 0.839 (0.784–0.886) | 0.204 (0.120–0.334) | 8.5× | 0.259 | 0.250 | 0.254 | 0.0214 | 0.087 |
+| Random Forest | 0.838 (0.782–0.885) | 0.152 (0.088–0.271) | 6.3× | 0.179 | 0.317 | 0.229 | 0.0220 | 0.061 |
+| Logistic Regression | 0.785 (0.728–0.840) | 0.076 (0.048–0.138) | 3.2× | 0.066 | **0.583** | 0.118 | 0.0229 | 0.023 |
+
+*Notes for Table 5.6b:*
+- *The 2026 outage rate was 2.4%.*
+- *"Lift over random" is average precision divided by that rate.*
+- *Brier skill is the improvement in Brier score over always predicting the 2.4% base rate. Higher is
+  better, and 0 means no better than that.*
+
+**XGBoost had the best observed result on the 2026 test set on almost every measure:**
+- **Ranking:** highest ROC-AUC (0.854). It is the best at placing outage days above normal days.
+- **Average precision:** highest (0.221), about 9 times better than random.
+- **Alerts:** best balance of precision and recall, giving the highest F1 (0.386).
+- **Probabilities:** lowest Brier score and highest Brier skill (0.094), so its probabilities were the
+  most accurate.
+
+However, the 2026 test set had only 60 outages, so the confidence intervals are wide. XGBoost's intervals
+for ROC-AUC and average precision overlap with LightGBM's and Random Forest's. The tree models therefore
+cannot be called statistically different. XGBoost performed best on this test period, and it was also
+equal to or better than the other tree models during validation.
+
+**Table 5.6c Warning Results on the 2026 Test Set (each model at its own selected threshold)**
+
+| Model | Threshold | Outages caught (of 60) | Missed | False alerts | Total alerts | Alerts per week | About 1 real outage per … alerts | Specificity |
+|---|---|---|---|---|---|---|---|---|
+| **XGBoost** | 0.122 | 28 | 32 | **57** | 85 | 2.1 | **3.0** | 97.7% |
+| LightGBM | 0.168 | 15 | 45 | 43 | 58 | 1.5 | 3.9 | 98.2% |
+| Random Forest | 0.130 | 19 | 41 | 87 | 106 | 2.7 | 5.6 | 96.4% |
+| Logistic Regression | 0.043 | **35** | **25** | 498 | 533 | 13.4 | 15.2 | 79.6% |
+
+*Specificity is the share of normal (no-outage) recloser-days that correctly received no alert.*
+
+Table 5.6c shows what each model would mean in daily operations across the 9 reclosers:
+
+- **XGBoost** issued about 2 alerts per week. About one in three alerts was a real outage, and it caught
+  28 of the 60 outages.
+- **LightGBM** issued fewer alerts, but caught only 15 outages. Its selected threshold (0.168) turned out
+  to be too strict for 2026, which had a lower outage rate than the development years.
+- **Random Forest** issued more alerts than XGBoost (106 vs 85) but caught fewer outages (19 vs 28).
+- **Logistic Regression** caught the most outages (35), but only by raising 533 alerts, about 13 per
+  week. Only about 1 in 15 of its alerts was a real outage. In practice, crews would soon learn to ignore
+  warnings this frequent. Catching 7 more outages than XGBoost cost 441 more false alerts.
+
+**Table 5.6d Outages Captured Among the Highest-Risk Recloser-Days in 2026**
+
+| Model | Top 5% riskiest days (125) | Top 10% (250) | Top 20% (500) |
+|---|---|---|---|
+| **XGBoost** | **30** (50%) | **35** (58%) | **44** (73%) |
+| LightGBM | 28 (47%) | 33 (55%) | 40 (67%) |
+| Random Forest | 25 (42%) | 31 (52%) | 42 (70%) |
+| Logistic Regression | 10 (17%) | 19 (32%) | 34 (57%) |
+
+*Each cell is the number of the 60 test outages that fell within that model's highest-risk
+recloser-days. A model guessing at random would capture about 5%, 10% and 20% of outages.*
+
+Table 5.6d compares the models without depending on any threshold. Suppose PALECO could only inspect or
+prepare for the riskiest 10% of recloser-days. XGBoost's list would have contained 35 of the 60 outages,
+compared with 33 for LightGBM, 31 for Random Forest and 19 for Logistic Regression. XGBoost captured the
+most outages at all three levels.
 
 **Figure 5.B1 Precision–Recall and ROC Curves of All Models (Test Period)**
 
 ![PR curves, all models](reports/figures/precision_recall_curve.png)
 ![ROC curves, all models](reports/figures/roc_curve.png)
 
-**Discussion of the baselines.**
-- **XGBoost and LightGBM** were practically tied in validation (PR-AUC 0.431 vs 0.433). On the 2026 test
-  set XGBoost scored higher on every metric, but the confidence intervals overlap heavily, so the two
-  gradient-boosting models should be regarded as comparable.
-- **Random Forest** was somewhat weaker (validation PR-AUC 0.409, test PR-AUC 0.152).
-- **Logistic Regression** was far weaker (validation PR-AUC 0.092, test 0.076). To reach a similar recall
-  it needed 533 alerts, almost all false (precision 6.6%). This shows that the relationships between
-  weather, history and outages are strongly nonlinear, which supports the choice of a tree-based ensemble
-  (Chen & Guestrin, 2016) and is consistent with the motivation drawn from Sharma et al. (2023) in
-  Table 2.3.
-- **Overall**, XGBoost combined the best test performance with discrimination as good as any tested
-  model, supporting its selection as the study's model.
+**Summary of the comparison**
+
+1. **Tree-based models clearly beat the linear baseline.** XGBoost, LightGBM and Random Forest all reached
+   ROC-AUC near 0.84–0.87, while Logistic Regression stayed well behind. This confirms that power outages
+   depend on non-linear combinations of weather, history and vegetation (Chen & Guestrin, 2016),
+   consistent with the motivation drawn from Sharma et al. (2023) in Table 2.3.
+2. **XGBoost was the strongest overall.** It tied with LightGBM in validation, and it had the best
+   observed test results for ranking, probability accuracy and warning quality.
+3. **Its advantage over the other tree models is modest.** With only 60 test outages, the overlapping
+   confidence intervals mean the gap may partly reflect this particular test year. The fair conclusion is
+   that XGBoost performed at least as well as the strongest alternatives, and best on the held-out data.
+4. **This supports choosing XGBoost as the primary model.** Its accuracy, well-calibrated probabilities
+   and built-in SHAP explanations suit the study's objectives.
 
 ---
 
