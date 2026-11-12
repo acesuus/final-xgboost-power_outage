@@ -1,9 +1,3 @@
-# Source data (PALECO-derived outage records) - not published; available on request
-data/recloser_modeling_dataset_66f.csv
-
-# Per-row outputs that reproduce outage labels
-reports/test_predictions.csv
-
 # Thesis manuscript
 *.pdf
 

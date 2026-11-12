@@ -13,7 +13,7 @@ Logistic Regression are baselines.
 | `predict.py` | Scores new recloser-days with the saved model |
 | `chapter5_analysis.py` | Extra analyses for the thesis chapter: SHAP, calibration, ablations (run after `train.py`) |
 | `CHAPTER_5_RESULTS_AND_DISCUSSION.md` | Chapter 5 results and discussion, organized by research objective |
-| `data/recloser_modeling_dataset_66f.csv` | Modeling dataset (13,473 recloser-days, 66 features); **not included in the public repository** |
+| `data/recloser_modeling_dataset_66f.csv` | Modeling dataset (13,473 recloser-days, 66 features) |
 | `data/feature_dictionary.csv` | Feature → feature-group mapping |
 | `model/` | Saved XGBoost models (3 seeds), calibration and alert threshold (`model_card.json`) |
 | `reports/` | All result tables (CSV), run log and figures |
@@ -23,9 +23,8 @@ Logistic Regression are baselines.
 Requirements: Python 3.10+, `numpy`, `pandas`, `scipy`, `scikit-learn`, `xgboost`, `lightgbm`, `matplotlib`.
 
 **Data availability.** The modeling dataset is derived from Palawan Electric Cooperative (PALECO)
-outage records and is used for academic purposes only, so it is not published in this repository.
-The trained model, the feature dictionary and all aggregated results are included. To retrain, place
-`recloser_modeling_dataset_66f.csv` in `data/`.
+outage records and is shared for academic purposes only. It is included in `data/`, together with
+the trained model, the feature dictionary and all results.
 
 ```bash
 python train.py
